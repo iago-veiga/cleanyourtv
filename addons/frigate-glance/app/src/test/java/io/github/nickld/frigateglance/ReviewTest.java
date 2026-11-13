@@ -95,4 +95,12 @@ public class ReviewTest {
         assertNull(Review.fromReplayEvent(fixture("event_update.json")));
         assertNull(Review.fromReplayEvent("not json"));
     }
+
+    @Test
+    public void audioComesFromData() {
+        Review r = Review.parse("{\"type\":\"new\",\"after\":{\"id\":\"a\",\"camera\":\"nursery\","
+                + "\"severity\":\"alert\",\"data\":{\"objects\":[],\"audio\":[\"crying\"]}}}");
+        assertEquals(List.of(), r.objects);
+        assertEquals(List.of("crying"), r.audio);
+    }
 }

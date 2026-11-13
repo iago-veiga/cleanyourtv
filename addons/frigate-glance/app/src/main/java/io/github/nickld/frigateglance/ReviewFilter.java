@@ -1,6 +1,6 @@
 package io.github.nickld.frigateglance;
 
-/** Decides whether a review may open a card: severity, camera, objects and snooze. */
+/** Decides whether a review may open a card: severity, camera, objects or sounds, and snooze. */
 public final class ReviewFilter {
     private final GlanceConfig config;
 
@@ -31,6 +31,7 @@ public final class ReviewFilter {
         if (!cameraOn(config, baseCamera(r.camera))) return false;
         if (config.labels.isEmpty()) return true;
         for (String o : r.objects) if (config.labels.contains(o)) return true;
+        for (String a : r.audio) if (config.labels.contains(a)) return true;
         return false;
     }
 }

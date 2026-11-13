@@ -47,6 +47,18 @@ public class ReviewFilterTest {
         assertFalse(filter("{\"labels\":[\"person\"]}").shows(review("alert", "driveway", "car"), NOW, 0));
     }
 
+    private static Review audioReview(String sound) {
+        return Review.parse("{\"type\":\"new\",\"after\":{\"id\":\"r2\",\"camera\":\"nursery\","
+                + "\"severity\":\"alert\",\"data\":{\"objects\":[],\"audio\":[\"" + sound + "\"]}}}");
+    }
+
+    @Test
+    public void labelFilterMatchesSoundsToo() {
+        assertTrue(filter("{\"labels\":[\"crying\"]}").shows(audioReview("crying"), NOW, 0));
+        assertFalse(filter("{\"labels\":[\"person\"]}").shows(audioReview("crying"), NOW, 0));
+        assertTrue(filter("{}").shows(audioReview("crying"), NOW, 0));
+    }
+
     @Test
     public void snoozedHidesEverythingUntilItExpires() {
         assertFalse(filter("{}").shows(review("alert", "driveway", "person"), NOW, NOW + 1));

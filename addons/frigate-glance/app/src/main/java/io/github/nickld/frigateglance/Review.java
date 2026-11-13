@@ -15,6 +15,8 @@ public final class Review {
     public final List<String> objects, zones, detectionIds;
     /** Names Frigate gave objects (a face, a known plate), from data.sub_labels. */
     public final List<String> subLabels;
+    /** Sounds Frigate heard (crying, bark, speech...), from data.audio. An audio alert has no objects. */
+    public final List<String> audio;
 
     private Review(String type, JSONObject after) {
         this.type = type;
@@ -24,6 +26,7 @@ public final class Review {
         JSONObject data = after.optJSONObject("data");
         objects = labels(Json.strings(data == null ? null : data.optJSONArray("objects")));
         subLabels = Json.strings(data == null ? null : data.optJSONArray("sub_labels"));
+        audio = Json.strings(data == null ? null : data.optJSONArray("audio"));
         zones = Json.strings(data == null ? null : data.optJSONArray("zones"));
         detectionIds = Json.strings(data == null ? null : data.optJSONArray("detections"));
     }
@@ -37,6 +40,7 @@ public final class Review {
         this.zones = zones;
         this.detectionIds = List.of(eventId);
         this.subLabels = List.of();
+        this.audio = List.of();
     }
 
     /**

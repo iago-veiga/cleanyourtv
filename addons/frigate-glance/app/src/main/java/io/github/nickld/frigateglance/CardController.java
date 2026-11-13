@@ -200,6 +200,7 @@ public final class CardController {
         if (TEST_ID.equals(shown.id)) return "Test card";
         Set<String> parts = new LinkedHashSet<>();
         for (String o : shown.objects) parts.add(pretty(o));
+        for (String a : shown.audio) parts.add(pretty(a));
         parts.addAll(shown.subLabels);
         for (Detection d : detections.values()) {
             if (d.subLabel != null) parts.add(d.subLabel);
